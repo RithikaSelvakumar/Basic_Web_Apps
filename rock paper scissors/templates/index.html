@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/899/325/192/minimalism-rock-paper-scissors-wallpaper-preview.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white background */
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome to Rock, Paper, Scissors!</h1>
+        <form action="/" method="post" class="form-inline justify-content-center">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="choice" class="sr-only">Choose rock, paper, or scissors:</label>
+                <select id="choice" name="choice" class="form-control">
+                    <option value="rock">Rock</option>
+                    <option value="paper">Paper</option>
+                    <option value="scissors">Scissors</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Play</button>
+            <button type="button" class="btn btn-danger mb-2 ml-2" id="reset">Reset</button>
+        </form>
+        {% if result %}
+            <h2 class="text-center result">Result: {{ result }}</h2>
+        {% endif %}
+        <div class="text-center mt-5">
+            <h2>Scoreboard</h2>
+            <p><b>You: {{ user_score }}</b></p>
+            <p><b>Computer: {{ computer_score }}</b></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reset').addEventListener('click', function() {
+            fetch('/reset', { method: 'POST' });
+            location.reload();
+        });
+    </script>
+</body>
+</html>

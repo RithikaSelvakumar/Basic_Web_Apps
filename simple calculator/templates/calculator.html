@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      background-color: lightgray;
+      background-repeat: no repeat;
+      background-size: cover;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 20px;
+    }
+    .container {
+      background-color: #585858;
+      background-size: cover;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .hr {
+      background-color: white;
+      font-color: #383838;
+      text-align: center;
+    }
+    button {
+      background-color: #e0e0e0;
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      margin: 5px;
+    }
+    .calculator {
+      width: 300px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <center>
+    <div class='container'>
+      <div class="calculator">
+        <div class="hr">
+          <h1>Simple Calculator</h1>
+        </div>
+        <form id="calcForm">
+          <input type="text" id="calc" name="expression">
+          <br>
+          <button type="button" onclick="addToInput('1')">1</button>
+          <button type="button" onclick="addToInput('2')">2</button>
+          <button type="button" onclick="addToInput('3')">3</button>
+          <button type="button" onclick="addToInput('+')">+</button>
+          <br>
+          <button type="button" onclick="addToInput('4')">4</button>
+          <button type="button" onclick="addToInput('5')">5</button>
+          <button type="button" onclick="addToInput('6')">6</button>
+          <button type="button" onclick="addToInput('-')">-</button>
+          <br>
+          <button type="button" onclick="addToInput('7')">7</button>
+          <button type="button" onclick="addToInput('8')">8</button>
+          <button type="button" onclick="addToInput('9')">9</button>
+          <button type="button" onclick="addToInput('*')">*</button>
+          <br>
+          <button type="button" onclick="addToInput('0')">0</button>
+          <button type="button" onclick="clearInput()">C</button>
+          <button type="button" id="calculateBtn">=</button>
+          <button type="button" onclick="addToInput('/')">/</button>
+        </form>
+      </div>
+    </div>
+  </center>
+
+  <script>
+    $(document).ready(function() {
+      $('#calculateBtn').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+          type: 'POST',
+          url: '/calculate',
+          data: $('#calcForm').serialize(),
+          success: function(response) {
+            $('#calc').val(response);
+          }
+        });
+      });
+    });
+
+    function addToInput(value) {
+      $('#calc').val($('#calc').val() + value);
+    }
+
+    function clearInput() {
+      $('#calc').val('');
+    }
+  </script>
+</body>
+</html>
